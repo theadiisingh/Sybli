@@ -184,13 +184,13 @@ const customValidators = {
         if (!/^[a-fA-F0-9]{64}$/.test(bioHash)) {
             throw new Error('Invalid bio-hash format');
         }
-
+        
         // In a real implementation, check against existing hashes
         // const exists = await biometricService.checkDuplicateBioHash(bioHash);
         // if (exists) {
         //     throw new Error('Biometric pattern already registered');
         // }
-
+        
         return true;
     }
 };
@@ -200,7 +200,7 @@ const customValidators = {
  */
 const handleValidationErrors = (req, res, next) => {
     const errors = validationResult(req);
-
+    
     if (!errors.isEmpty()) {
         const errorMessages = errors.array().map(error => ({
             field: error.param,
@@ -214,7 +214,7 @@ const handleValidationErrors = (req, res, next) => {
             errors: errorMessages
         });
     }
-
+    
     next();
 };
 
@@ -226,20 +226,20 @@ const sanitizeInput = (req, res, next) => {
     if (req.body.username) {
         req.body.username = req.body.username.trim().replace(/[^a-zA-Z0-9_]/g, '');
     }
-
+    
     if (req.body.email) {
         req.body.email = req.body.email.trim().toLowerCase();
     }
-
+    
     if (req.body.walletAddress) {
         req.body.walletAddress = req.body.walletAddress.trim().toLowerCase();
     }
-
+    
     // Sanitize text fields
     if (req.body.title) {
         req.body.title = req.body.title.trim().replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
     }
-
+    
     if (req.body.description) {
         req.body.description = req.body.description.trim().replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
     }
@@ -276,123 +276,10 @@ const validateFileUpload = (allowedTypes, maxSize) => {
     };
 };
 
-/**
- * Authentication validation rules
- */
-const validateRegistration = [
-    body('username')
-        .isLength({ min: 3, max: 30 })
-        .withMessage('Username must be between 3 and 30 characters')
-        .matches(/^[a-zA-Z0-9_]+$/)
-        .withMessage('Username can only contain letters, numbers, and underscores'),
-
-    body('walletAddress')
-        .isLength({ min: 42, max: 42 })
-        .withMessage('Valid wallet address required')
-        .matches(/^0x[a-fA-F0-9]{40}$/)
-        .withMessage('Invalid Ethereum address format'),
-
-    body('email')
-        .optional()
-        .isEmail()
-        .withMessage('Valid email address required')
-        .normalizeEmail(),
-
-    body('password')
-        .isLength({ min: 8 })
-        .withMessage('Password must be at least 8 characters long')
-];
-
-const validateLogin = [
-    body('email')
-        .isEmail()
-        .withMessage('Valid email address required')
-        .normalizeEmail(),
-
-    body('password')
-        .notEmpty()
-        .withMessage('Password is required')
-];
-
-const validateRefreshToken = [
-    body('refreshToken')
-        .notEmpty()
-        .withMessage('Refresh token is required')
-];
-
-const validateForgotPassword = [
-    body('email')
-        .isEmail()
-        .withMessage('Valid email address required')
-        .normalizeEmail()
-];
-
-const validateResetPassword = [
-    body('token')
-        .notEmpty()
-        .withMessage('Reset token is required'),
-
-    body('password')
-        .isLength({ min: 8 })
-        .withMessage('Password must be at least 8 characters long')
-];
-
-const validateProfileUpdate = [
-    body('username')
-        .optional()
-        .isLength({ min: 3, max: 30 })
-        .withMessage('Username must be between 3 and 30 characters')
-        .matches(/^[a-zA-Z0-9_]+$/)
-        .withMessage('Username can only contain letters, numbers, and underscores'),
-
-    body('email')
-        .optional()
-        .isEmail()
-        .withMessage('Valid email address required')
-        .normalizeEmail(),
-
-    body('bio')
-        .optional()
-        .isLength({ max: 500 })
-        .withMessage('Bio must be less than 500 characters'),
-
-    body('website')
-        .optional()
-        .isURL()
-        .withMessage('Valid website URL required'),
-
-    body('socialLinks')
-        .optional()
-        .isObject()
-        .withMessage('Social links must be an object')
-];
-
-const validateAccountDeletion = [
-    body('confirmation')
-        .equals('DELETE_MY_ACCOUNT')
-        .withMessage('Confirmation phrase required'),
-
-    body('password')
-        .notEmpty()
-        .withMessage('Password confirmation required')
-];
-
-const validateAdminAccess = [
-    // This will be checked in the controller
-];
-
 module.exports = {
     validationRules,
     customValidators,
     handleValidationErrors,
     sanitizeInput,
-    validateFileUpload,
-    validateRegistration,
-    validateLogin,
-    validateRefreshToken,
-    validateForgotPassword,
-    validateResetPassword,
-    validateProfileUpdate,
-    validateAccountDeletion,
-    validateAdminAccess
+    validateFileUpload
 };
