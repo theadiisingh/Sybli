@@ -1,5 +1,5 @@
 // backend/src/services/nftService.js
-const NFT = require('../../database/models/NFT');
+const NFT = require('../../database/models/HumanityNFT');
 
 class NFTService {
     async createNFTRecord(nftData) {

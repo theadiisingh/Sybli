@@ -1,0 +1,30 @@
+{
+  "name": "sybli-database",
+  "version": "1.0.0",
+  "description": "Database layer for Sybli backend with MongoDB schemas, migrations, and models",
+  "main": "database.js",
+  "scripts": {
+    "migrate": "migrate-mongo up",
+    "migrate:down": "migrate-mongo down",
+    "migrate:create": "migrate-mongo create",
+    "seed": "node scripts/seed.js",
+    "connect": "node database.js"
+  },
+  "dependencies": {
+    "mongoose": "^7.0.0",
+    "migrate-mongo": "^9.0.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0"
+  },
+  "keywords": [
+    "mongodb",
+    "mongoose",
+    "database",
+    "migrations",
+    "schemas"
+  ],
+  "author": "Sybli Team",
+  "license": "MIT"
+}

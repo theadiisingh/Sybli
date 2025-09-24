@@ -7,10 +7,38 @@ const express = require('express');
 const router = express.Router();
 const nftController = require('../controllers/nftController');
 const authMiddleware = require('../middleware/authMiddleware');
+const validationMiddleware = require('../middleware/validationMiddleware');
 
-// Protected routes
-router.post('/create', authMiddleware, nftController.createNFT);
-router.get('/:id', authMiddleware, nftController.getNFT);
-router.post('/transfer', authMiddleware, nftController.transferNFT);
+// Public routes
+router.get('/', nftController.getAllNFTs);
+router.get('/stats', nftController.getNFTStats);
+router.get('/token/:tokenId', nftController.getNFTByTokenId);
+router.post('/verify', nftController.verifyNFT);
+
+// Protected routes (require authentication)
+router.post('/mint',
+  authMiddleware.authenticate,
+  validationMiddleware.validationRules.validateNFTMint,
+  validationMiddleware.handleValidationErrors,
+  nftController.mintHumanityNFT
+);
+
+router.get('/user/:userId', authMiddleware.authenticate, nftController.getNFTByUser);
+
+// Admin routes
+router.put('/:tokenId/metadata',
+  authMiddleware.authenticate,
+  authMiddleware.requireAdmin,
+  validationMiddleware.validateAdminAccess,
+  validationMiddleware.handleValidationErrors,
+  nftController.updateNFTMetadata
+);
+
+router.post('/:tokenId/transfer',
+  authMiddleware.authenticate,
+  validationMiddleware.validationRules.validateNFTTransfer,
+  validationMiddleware.handleValidationErrors,
+  nftController.transferNFT
+);
 
 module.exports = router;

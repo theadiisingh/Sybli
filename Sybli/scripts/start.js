@@ -1,6 +1,6 @@
 // backend/scripts/start.js
-require('dotenv').config();
-const server = require('../server');
+require('dotenv').config({ path: './backend/.env.backend' });
+const server = require('../backend/server');
 
 // Handle uncaught exceptions before server starts
 process.on('uncaughtException', (error) => {

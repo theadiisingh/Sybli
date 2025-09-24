@@ -429,9 +429,6 @@ class NeuroCreditServer {
                 console.log(`   NFT: /nft`);
                 console.log(`   DAO: /dao`);
                 console.log('');
-
-                // Emit server started event
-                this.emit('started');
             });
 
             // Handle server errors

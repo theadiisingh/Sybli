@@ -196,7 +196,7 @@ const getDAOActivity = async (req, res) => {
         const { votes, totalCount } = await daoService.getUserVotes(userId, (page - 1) * limit, limit);
 
         // Get proposals created by user
-        const Proposal = require('../../database/models/Proposal');
+        const Proposal = require('../../database/models/Proposals_new');
         const userProposals = await Proposal.find({ createdBy: userId })
             .sort({ createdAt: -1 })
             .limit(5);
@@ -331,7 +331,7 @@ const getUserTimeline = async (req, res) => {
         }
 
         // Voting activity
-        const Vote = require('../../database/models/Vote');
+        const Vote = require('../../database/models/Vote_new');
         const recentVotes = await Vote.find({ userId })
             .sort({ votedAt: -1 })
             .limit(3)
@@ -447,11 +447,11 @@ const getPublicProfile = async (req, res) => {
 
         // Add DAO activity stats (without sensitive data)
         const daoService = require('../services/daoService');
-        const voteCount = await require('../../database/models/Vote').countDocuments({ 
-            userId: user._id 
+        const voteCount = await require('../../database/models/Vote_new').countDocuments({
+            userId: user._id
         });
-        const proposalCount = await require('../../database/models/Proposal').countDocuments({ 
-            createdBy: user._id 
+        const proposalCount = await require('../../database/models/Proposals_new').countDocuments({
+            createdBy: user._id
         });
 
         publicProfile.daoActivity = {
@@ -523,11 +523,11 @@ const getAllUsers = async (req, res) => {
 // Helper function to calculate participation rate
 async function calculateParticipationRate(userId) {
     try {
-        const totalProposals = await require('../../database/models/Proposal').countDocuments({
+        const totalProposals = await require('../../database/models/Proposals_new').countDocuments({
             status: 'completed'
         });
-        
-        const userVotes = await require('../../database/models/Vote').countDocuments({
+
+        const userVotes = await require('../../database/models/Vote_new').countDocuments({
             userId: userId
         });
 

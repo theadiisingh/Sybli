@@ -1,6 +1,6 @@
 // backend/src/services/daoService.js
-const Proposal = require('../../database/models/Proposal');
-const Vote = require('../../database/models/Vote');
+const Proposal = require('../../database/models/Proposals_new');
+const Vote = require('../../database/models/Vote_new');
 const User = require('../../database/models/User');
 
 class DAOService {
