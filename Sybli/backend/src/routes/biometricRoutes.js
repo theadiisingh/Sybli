@@ -1,15 +1,11 @@
-/**
- * Biometric Routes
- * Defines all biometric-related API endpoints
- */
-
 const express = require('express');
 const router = express.Router();
 const biometricController = require('../controllers/biometricController');
-const biometricMiddleware = require('../middleware/biometricMiddleware');
 
-// Protected routes
-router.post('/process', biometricMiddleware, biometricController.processBiometricData);
-router.post('/analyze', biometricMiddleware, biometricController.analyzePattern);
+router.post('/process', biometricController.processBiometricPattern);
+router.post('/verify', biometricController.verifyBiometricPattern);
+router.get('/status/:walletAddress', biometricController.getBiometricStatus);
+router.put('/update', biometricController.updateBiometricPattern);
+router.delete('/remove', biometricController.removeBiometricPattern);
 
 module.exports = router;

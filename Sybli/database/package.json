@@ -1,0 +1,21 @@
+{
+  "name": "sybli-database",
+  "version": "1.0.0",
+  "description": "Database layer for Sybli backend",
+  "main": "database.js",
+  "scripts": {
+    "migrate": "mongodb-migrate up",
+    "migrate:down": "mongodb-migrate down",
+    "seed": "node seeds/test-data.js"
+  },
+  "dependencies": {
+    "mongoose": "^7.0.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "mongodb-migrate": "^2.0.0"
+  },
+  "keywords": ["database", "mongodb", "mongoose", "sybli"],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,18 +1,11 @@
-/**
- * Authentication Routes
- * Defines all authentication-related API endpoints
- */
-
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-const authMiddleware = require('../middleware/authMiddleware');
 
-// Public routes
-router.post('/register', authController.register);
-router.post('/login', authController.login);
-
-// Protected routes
-router.post('/logout', authMiddleware, authController.logout);
+router.post('/nonce', authController.generateNonce);
+router.post('/verify', authController.verifySignature);
+router.post('/biometric/register', authController.registerBiometric);
+router.post('/refresh', authController.refreshToken);
+router.post('/logout', authController.logout);
 
 module.exports = router;

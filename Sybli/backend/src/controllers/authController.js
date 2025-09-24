@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { Web3 } = require('web3');
-const User = require('../../database/models/User');
-const BiometricHash = require('../../database/models/BiometricHash');
+const User = require('../../../database/models/User');
 const { generateAuthTokens, verifyToken, generateBiometricToken } = require('../services/hashingService');
 const { validateEthAddress, validateSignature } = require('../utils/validationUtils');
 const { API_RESPONSES, ERROR_MESSAGES, SUCCESS_MESSAGES } = require('../utils/constants');
