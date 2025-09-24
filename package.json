@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "ethers": "^6.15.0",
     "handlebars": "^4.7.8",
     "nodemailer": "^6.10.1",
+    "web3": "^4.16.0",
     "winston": "^3.17.0"
   }
 }
