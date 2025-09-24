@@ -4,7 +4,8 @@
  */
 
 const { Web3 } = require('web3');
-const { VALIDATION, BIOMETRIC_TYPES, API_RESPONSES } = require('./constants');
+const { VALIDATION, BIOMETRIC, API_RESPONSES } = require('./constants');
+const BIOMETRIC_TYPES = BIOMETRIC.TYPES;
 
 class ValidationUtils {
     /**

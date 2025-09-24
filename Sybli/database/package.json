@@ -9,13 +9,19 @@
     "seed": "node seeds/test-data.js"
   },
   "dependencies": {
-    "mongoose": "^7.0.0",
-    "dotenv": "^16.0.0"
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.0.0",
+    "mongoose": "^7.0.0"
   },
   "devDependencies": {
     "mongodb-migrate": "^2.0.0"
   },
-  "keywords": ["database", "mongodb", "mongoose", "sybli"],
+  "keywords": [
+    "database",
+    "mongodb",
+    "mongoose",
+    "sybli"
+  ],
   "author": "",
   "license": "ISC"
 }

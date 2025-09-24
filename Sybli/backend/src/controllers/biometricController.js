@@ -1,11 +1,12 @@
 const { Web3 } = require('web3');
 const bcrypt = require('bcryptjs');
-const User = require('../../database/models/User');
-const BiometricHash = require('../../database/models/BiometricHash');
+const User = require('../../../database/models/User');
+const BiometricHash = require('../../../database/models/BiometricHash');
 const { validateEthAddress, validateBiometricData } = require('../utils/validationUtils');
 const { extractFacialPattern, extractBehavioralPattern, comparePatterns } = require('../utils/biometricUtils');
 const { generateBiometricToken, hashBiometricData } = require('../services/hashingService');
-const { API_RESPONSES, BIOMETRIC_TYPES, PATTERN_THRESHOLDS } = require('../utils/constants');
+const { API_RESPONSES, BIOMETRIC, PATTERN_THRESHOLDS } = require('../utils/constants');
+const BIOMETRIC_TYPES = BIOMETRIC.TYPES;
 const { logBiometricActivity, logSecurityEvent } = require('../utils/logger');
 
 /**
@@ -36,7 +37,7 @@ class BiometricController {
             // Verify signature for security
             const message = `NeuroCredit Biometric Processing: ${walletAddress}`;
             const signerAddress = this.web3.eth.accounts.recover(message, signature);
-            
+
             if (signerAddress.toLowerCase() !== walletAddress.toLowerCase()) {
                 return res.status(401).json({
                     success: false,
@@ -166,7 +167,7 @@ class BiometricController {
             // Verify signature
             const message = `NeuroCredit Biometric Verification: ${sessionId}`;
             const signerAddress = this.web3.eth.accounts.recover(message, signature);
-            
+
             if (signerAddress.toLowerCase() !== walletAddress) {
                 return res.status(401).json({
                     success: false,
@@ -395,7 +396,7 @@ class BiometricController {
             // Verify signature
             const message = `NeuroCredit Biometric Update: ${walletAddress}-${patternType}`;
             const signerAddress = this.web3.eth.accounts.recover(message, signature);
-            
+
             if (signerAddress.toLowerCase() !== walletAddress.toLowerCase()) {
                 return res.status(401).json({
                     success: false,
@@ -495,7 +496,7 @@ class BiometricController {
             // Verify signature
             const message = `NeuroCredit Biometric Removal: ${walletAddress}-${patternType}`;
             const signerAddress = this.web3.eth.accounts.recover(message, signature);
-            
+
             if (signerAddress.toLowerCase() !== walletAddress.toLowerCase()) {
                 return res.status(401).json({
                     success: false,
@@ -558,7 +559,7 @@ class BiometricController {
     async processFacialPattern(videoData) {
         // In a real implementation, this would use computer vision libraries
         // For hackathon demo, we'll simulate pattern extraction
-        
+
         const facialPattern = {
             landmarks: this.extractFacialLandmarks(videoData),
             texture: this.analyzeFacialTexture(videoData),
@@ -593,7 +594,7 @@ class BiometricController {
         // Simple quality calculation based on pattern completeness
         let quality = 0;
         const keys = Object.keys(pattern).filter(key => key !== 'timestamp');
-        
+
         keys.forEach(key => {
             if (pattern[key] && Object.keys(pattern[key]).length > 0) {
                 quality += 0.2; // Each component contributes to quality

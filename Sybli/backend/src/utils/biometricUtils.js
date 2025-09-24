@@ -4,7 +4,8 @@
  */
 
 const crypto = require('crypto');
-const { BIOMETRIC_TYPES, PATTERN_THRESHOLDS } = require('./constants');
+const { BIOMETRIC, PATTERN_THRESHOLDS } = require('./constants');
+const BIOMETRIC_TYPES = BIOMETRIC.TYPES;
 
 class BiometricUtils {
     /**
